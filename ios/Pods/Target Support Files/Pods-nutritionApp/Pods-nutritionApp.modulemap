@@ -1,0 +1,6 @@
+module Pods_nutritionApp {
+  umbrella header "Pods-nutritionApp-umbrella.h"
+
+  export *
+  module * { export * }
+}
