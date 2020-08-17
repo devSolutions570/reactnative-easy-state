@@ -11,8 +11,6 @@ export default Home = ({ navigation }) => {
 }
 
 const styles = StyleSheet.create({
-    container: {
-    },
     textStyle: {
         color: '#000',
     }
