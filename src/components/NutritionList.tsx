@@ -9,7 +9,7 @@ import { view } from '@risingstack/react-easy-state';
 import { NavigationParams } from 'react-navigation';
 import { NutritionCheck } from '../types/types'
 import "../types/alltypes.d.ts";
-import CheckBox from 'react-native-checkbox';
+import CheckBox from '@react-native-community/checkbox';
 
 type Props = {
     update: string;
@@ -89,18 +89,16 @@ const NutritionList: React.FC<Props> = ({ navigation, update }) => {
             setSelectedCount(selectedCount - 1);
         }
         setCheckedIDs(checkedIDs);
-        navigation.navigate("Home", { update: false })
+        // navigation.navigate("Home", { update: false })
     }
 
-    const handleSelectAllChange = () => {
-
-        console.log("error........................");
+    const handleSelectAllChange = (newValue: boolean) => {
 
         let newCheckIDs: NutritionCheck[] = [];
         nutritions.all.map((nutrition, i) => {
             newCheckIDs[i] = {
                 id: nutrition.id,
-                checked: !selectAll
+                checked: newValue
             }
         })
         if (selectAll === true) {
@@ -144,7 +142,7 @@ const NutritionList: React.FC<Props> = ({ navigation, update }) => {
                 <ScrollView horizontal={true}>
                     <DataTable style={styles.dataTable}>
                         <DataTable.Header style={styles.tableHeader}>
-                            <DataTable.Title ><CheckBox style={{flex: 1, padding: 10}} label={''} isChecked={selectAll} onClick={() => { handleSelectAllChange() }} /></DataTable.Title>
+                            <DataTable.Title ><View style={styles.checkboxContainer}><CheckBox checkboxSize={5} style={styles.checkbox} boxType="square" value={selectAll} onValueChange={(newValue) => { handleSelectAllChange(newValue) }} /></View></DataTable.Title>
                             <DataTable.Title numeric>Dessert(100g serving)</DataTable.Title>
                             <DataTable.Title numeric>Calories</DataTable.Title>
                             <DataTable.Title numeric>Fat (g)</DataTable.Title>
@@ -153,15 +151,18 @@ const NutritionList: React.FC<Props> = ({ navigation, update }) => {
                         </DataTable.Header>
                         {nutritions.all.map((nutrition, i) => {
                             return (
-                                <DataTable.Row style={styles.tableRow} key={i} onPress={() => {
-                                    setSelectedCount(0);
-                                    navigation.navigate('EditNutrition', { editIndex: i });
-                                }}>
-                                    <DataTable.Cell><CheckBox label={''}  isChecked={(checkedIDs[i] !== undefined) ? checkedIDs[i].checked : false} onClick={() => {
+                                <DataTable.Row style={styles.tableRow} key={i} >
+                                    <DataTable.Cell><CheckBox boxType="square" value={(checkedIDs[i] !== undefined) ? checkedIDs[i].checked : false} onValueChange={() => {
                                         selectRow(nutrition.id);
                                     }} key={nutrition.id} /></DataTable.Cell>
-                                    <DataTable.Cell numeric>{nutrition.dessertName}</DataTable.Cell>
-                                    <DataTable.Cell numeric>{nutrition.calories}</DataTable.Cell>
+                                    <DataTable.Cell numeric onPress={() => {
+                                        setSelectedCount(0);
+                                        navigation.navigate('EditNutrition', { editIndex: i });
+                                    }}>{nutrition.dessertName}</DataTable.Cell>
+                                    <DataTable.Cell numeric onPress={() => {
+                                        setSelectedCount(0);
+                                        navigation.navigate('EditNutrition', { editIndex: i });
+                                    }}>{nutrition.calories}</DataTable.Cell>
                                     <DataTable.Cell numeric>{nutrition.fat}</DataTable.Cell>
                                     <DataTable.Cell numeric>{nutrition.carbs}</DataTable.Cell>
                                     <DataTable.Cell numeric>{nutrition.protein}</DataTable.Cell>
@@ -255,5 +256,12 @@ const styles = StyleSheet.create({
     },
     dataTable: {
         width: 400,
+    },
+    checkboxContainer: {
+        flexDirection: "row",
+        marginBottom: 50,
+    },
+    checkbox: {
+        alignSelf: "center",
     },
 });
