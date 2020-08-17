@@ -9,12 +9,17 @@
         "moduleResolution": "node",
         "noEmit": true,
         "strict": true,
-        "target": "esnext"
+        "target": "esnext",
+        "noImplicitAny": false
     },
+    "typeRoots": [
+        "../node_modules/@types",
+        "../@types"
+    ],
     "exclude": [
         "node_modules",
         "babel.config.js",
         "metro.config.js",
         "jest.config.js"
-  ]
+    ]
 }

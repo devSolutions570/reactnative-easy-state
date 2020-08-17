@@ -6,3 +6,8 @@ export type Nutrition = {
     carbs: string;
     protein: string;
 };
+
+export type NutritionCheck = {
+    id: number;
+    checked: boolean;
+}

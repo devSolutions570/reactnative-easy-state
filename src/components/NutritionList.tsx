@@ -1,21 +1,29 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, Alert, ScrollView } from 'react-native';
 import { DataTable } from 'react-native-paper';
-import CheckBox from 'react-native-check-box'
 import LinearGradient from "react-native-linear-gradient";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import nutritions from '../store/NutritionsStore';
 import { useFocusEffect } from '@react-navigation/native';
 import { view } from '@risingstack/react-easy-state';
+import { NavigationParams } from 'react-navigation';
+import { NutritionCheck } from '../types/types'
+import "../types/alltypes.d.ts";
+import CheckBox from 'react-native-checkbox';
 
-export default view(NutritionList = ({ navigation, update }) => {
-    const [checkedIDs, setCheckedIDs] = useState([])
+type Props = {
+    update: string;
+    navigation: NavigationParams;
+};
+
+const NutritionList: React.FC<Props> = ({ navigation, update }) => {
+    const [checkedIDs, setCheckedIDs] = useState<NutritionCheck[]>([]);
     const [selectAll, setSelectAll] = useState(false);
     const [selectedCount, setSelectedCount] = useState(0);
 
     useFocusEffect(
         React.useCallback(() => {
-            let newCheckIDs = [];
+            let newCheckIDs: NutritionCheck[] = [];
             nutritions.all.map((nutrition, i) => {
                 newCheckIDs[i] = {
                     id: nutrition.id,
@@ -71,7 +79,8 @@ export default view(NutritionList = ({ navigation, update }) => {
         }
     }
 
-    const selectRow = (id) => {
+    const selectRow = (id: number) => {
+        let selectedNutrition: NutritionCheck[];
         selectedNutrition = checkedIDs.filter(item => item.id === id);
         selectedNutrition[0].checked = !selectedNutrition[0].checked;
         if (selectedNutrition[0].checked === true) {
@@ -84,7 +93,10 @@ export default view(NutritionList = ({ navigation, update }) => {
     }
 
     const handleSelectAllChange = () => {
-        let newCheckIDs = [];
+
+        console.log("error........................");
+
+        let newCheckIDs: NutritionCheck[] = [];
         nutritions.all.map((nutrition, i) => {
             newCheckIDs[i] = {
                 id: nutrition.id,
@@ -115,7 +127,7 @@ export default view(NutritionList = ({ navigation, update }) => {
                     </LinearGradient>
                 </TouchableOpacity>
             </View>
-            <View style={styles.tableContainer}>
+            <View>
                 <View style={styles.tableHeaderBar}>
                     <Text style={styles.tableHeaderTitle}>{selectedCount} selected</Text>
                     <View style={styles.tableButtonCotainer}>
@@ -129,10 +141,10 @@ export default view(NutritionList = ({ navigation, update }) => {
                         </TouchableOpacity>
                     </View>
                 </View>
-                <ScrollView style={styles.dataWrapper} horizontal={true}>
+                <ScrollView horizontal={true}>
                     <DataTable style={styles.dataTable}>
                         <DataTable.Header style={styles.tableHeader}>
-                            <DataTable.Title ><CheckBox isChecked={selectAll} onClick={() => { handleSelectAllChange() }} /></DataTable.Title>
+                            <DataTable.Title ><CheckBox style={{flex: 1, padding: 10}} label={''} isChecked={selectAll} onClick={() => { handleSelectAllChange() }} /></DataTable.Title>
                             <DataTable.Title numeric>Dessert(100g serving)</DataTable.Title>
                             <DataTable.Title numeric>Calories</DataTable.Title>
                             <DataTable.Title numeric>Fat (g)</DataTable.Title>
@@ -145,7 +157,7 @@ export default view(NutritionList = ({ navigation, update }) => {
                                     setSelectedCount(0);
                                     navigation.navigate('EditNutrition', { editIndex: i });
                                 }}>
-                                    <DataTable.Cell style={styles.checkColumn}><CheckBox isChecked={(checkedIDs[i] !== undefined) ? checkedIDs[i].checked : false} onClick={() => {
+                                    <DataTable.Cell><CheckBox label={''}  isChecked={(checkedIDs[i] !== undefined) ? checkedIDs[i].checked : false} onClick={() => {
                                         selectRow(nutrition.id);
                                     }} key={nutrition.id} /></DataTable.Cell>
                                     <DataTable.Cell numeric>{nutrition.dessertName}</DataTable.Cell>
@@ -169,7 +181,9 @@ export default view(NutritionList = ({ navigation, update }) => {
             </View>
         </View>
     );
-});
+};
+
+export default view(NutritionList);
 
 const styles = StyleSheet.create({
     container: {

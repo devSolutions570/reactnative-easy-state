@@ -6,7 +6,7 @@ import EditNutrition from '../pages/EditNutrition';
 
 const Stack = createStackNavigator();
 
-export default Route = () => {
+const Route: React.FC = () => {
     return (
         <NavigationContainer>
             <Stack.Navigator initialRouteName="Home">
@@ -26,3 +26,5 @@ export default Route = () => {
         </NavigationContainer>
     )
 }
+
+export default Route;

@@ -1,10 +1,10 @@
 import { store } from '@risingstack/react-easy-state'
 import { Nutrition } from '../types/types'
 
-let datas: Nutrition[] = [];
+let initNutritions: Nutrition[] = [];
 
 const nutritions = store({
-    all: datas,
+    all: initNutritions,
     create: (nutrition: Nutrition) => {
         let nutritionObject: Nutrition = nutritions.all[nutritions.all.length-1];
         if (nutritions.all.length === 0) {
