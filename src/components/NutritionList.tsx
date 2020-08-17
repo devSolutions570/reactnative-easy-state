@@ -141,7 +141,7 @@ const NutritionList: React.FC<Props> = ({ navigation, update }) => {
                 <ScrollView horizontal={true}>
                     <DataTable style={styles.dataTable}>
                         <DataTable.Header style={styles.tableHeader}>
-                            <DataTable.Title ><View style={styles.checkboxContainer}><CheckBox checkboxSize={5} style={styles.checkbox} boxType="square" value={selectAll} onValueChange={(newValue) => { handleSelectAllChange(newValue) }} /></View></DataTable.Title>
+                            <DataTable.Title ><View style={styles.checkboxContainer}><CheckBox checkboxSize={5} style={styles.checkbox} boxType="square" value={selectAll} onValueChange={ handleSelectAllChange } /></View></DataTable.Title>
                             <DataTable.Title numeric>Dessert(100g serving)</DataTable.Title>
                             <DataTable.Title numeric>Calories</DataTable.Title>
                             <DataTable.Title numeric>Fat (g)</DataTable.Title>
