@@ -8,7 +8,6 @@ import { useFocusEffect } from '@react-navigation/native';
 import { view } from '@risingstack/react-easy-state';
 import { NavigationParams } from 'react-navigation';
 import { NutritionCheck } from '../types/types'
-import "../types/alltypes.d.ts";
 import CheckBox from '@react-native-community/checkbox';
 
 type Props = {
@@ -259,7 +258,7 @@ const styles = StyleSheet.create({
     },
     checkboxContainer: {
         flexDirection: "row",
-        marginBottom: 50,
+        margin: 100,
     },
     checkbox: {
         alignSelf: "center",
