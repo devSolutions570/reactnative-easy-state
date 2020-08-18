@@ -10,16 +10,11 @@ import React from 'react';
 import {
   StyleSheet,
   View,
-  StatusBar,
 } from 'react-native';
-
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
 
 import Route from './src/routes/Route'
 
-const App = () => {
+const App: React.FC = () => {
   return (
     <View style={styles.container}>
       <Route />

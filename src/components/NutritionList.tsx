@@ -23,12 +23,14 @@ const NutritionList: React.FC<Props> = ({ navigation, update }) => {
     useFocusEffect(
         React.useCallback(() => {
             let newCheckIDs: NutritionCheck[] = [];
-            nutritions.all.map((nutrition, i) => {
-                newCheckIDs[i] = {
+            
+            nutritions.all.forEach((nutrition, index) => {
+                newCheckIDs[index] = {
                     id: nutrition.id,
                     checked: false
                 }
             })
+            
             setCheckedIDs(newCheckIDs);
             navigation.navigate("Home", { update: false })
         }, [])
